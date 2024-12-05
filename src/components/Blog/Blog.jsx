@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
 import Frame from '../../assets/images/Frame.svg'
 
-const Blog = ({blog}) => {
-    console.log(blog);
+
+const Blog = ({ blog, handleAddToBookmark, handleMarkAsRead }) => {
+    
     
     const { title, cover, author, author_img, posted_date, reading_time, hashtags }= blog
     return (
-        <div className='mb-20'>
+        <div className='mb-20 space-y-4'>
             <img className='w-full mb-8' src={cover} alt="" />
-            <div className='flex justify-between'>
+            <div className='flex justify-between mb-4 '>
                 <div className='flex gap-4 items-center p-2'>
                     <img className='w-16 rounded-full' src={author_img} alt="" />
                     <div className='ml-6'>
@@ -18,7 +19,7 @@ const Blog = ({blog}) => {
                 </div>
                 <div className='flex items-center pr-5'>
                     <span>{reading_time}min read</span>
-                    <img className='w-6' src={Frame} alt="" />
+                    <img onClick={() => handleAddToBookmark(blog)} className='w-6' src={Frame} alt="" />
                 </div>
             </div>
             <h2 className='text-4xl font-normal mt-12 mb-10'>{title}</h2>
@@ -27,10 +28,19 @@ const Blog = ({blog}) => {
                     hashtags.map((has, idx) => <span key={idx} className='pl-8'><a href="">{has}</a></span>)
                 }
             </p>
+            <button 
+                onClick={() => handleMarkAsRead(reading_time)}
+                className='text-purple-700 font-bold underline'
+                >Mark As Red
+            </button>
         </div>
     );
 };
 Blog.propTypes = {
-    blog: PropTypes.object.isRequired
+    blog: PropTypes.object.isRequired,
+    handleAddToBookmark : PropTypes.func,
+    handleMarkAsRead : PropTypes.func
+    
 }
+    
 export default Blog;
